@@ -10,10 +10,6 @@ class GeneralException(Exception):
 class InvalidInputException(GeneralException):
     pass
 
-class SongDoesNotExistException(GeneralException):
-    pass
-
-
 
 # Check if requestis  number between 5 and 20
 def is_number_valid(user_input):
@@ -28,12 +24,12 @@ def is_number_valid(user_input):
 
 # Generate words list from random words API
 def random_words(number):
-    result = []
-    for i in range(5, number+1):
+    result = set()
+    for i in range(1, number+1):
         response = requests.get(word_gen_api)
         response_json = response.json()[0]
         word = response_json.get('word')
-        result.append(word)
+        result.add(word)
     return result
 
 # Generate songs list from Music Brainz API
@@ -59,9 +55,12 @@ def random_songs(words):
 
 # Return songs list for given number
 def songs_list(user_input):
-    number = is_number_valid(user_input)
-    words = random_words(number)
-    songs = random_songs(words)
-    return songs
+    try:
+        number = is_number_valid(user_input)
+        words = random_words(number)
+        result = random_songs(words)
+    except InvalidInputException:
+        result = {'message': 'Invalid request - please enter intiger from 5 to 20.'}
+    return result
 
         
