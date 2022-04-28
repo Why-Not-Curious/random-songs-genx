@@ -21,7 +21,7 @@ def is_number_valid(user_input):
         number = int(user_input)
     except: 
         raise InvalidInputException
-    if 0 <= number <= 20:
+    if 5 <= number <= 20:
         return number
     else:
         raise InvalidInputException
@@ -29,7 +29,7 @@ def is_number_valid(user_input):
 # Generate words list from random words API
 def random_words(number):
     result = []
-    for i in range(1, number+1):
+    for i in range(5, number+1):
         response = requests.get(word_gen_api)
         response_json = response.json()[0]
         word = response_json.get('word')
@@ -38,7 +38,7 @@ def random_words(number):
 
 # Generate songs list from Music Brainz API
 def random_songs(words):
-    result = []
+    result = {}
     for word in words:
         response = requests.get(song_gen_api + word)
         response_json = response.json()
@@ -49,12 +49,12 @@ def random_songs(words):
             artist_name = artist_credit.get('name')
             releases = recordings.get('releases')[0]
             release_title = releases.get('title')
-            song = {word: {'title': title, 
+            song = {'title': title, 
                         'artist': artist_name,
-                        'album': release_title}}
+                        'album': release_title}
         except:
-            song = {word: 'No recording found!'}
-        result.append(song)
+            song = 'No recording found!'
+        result.update({word: song})
     return result
 
 # Return songs list for given number
@@ -62,7 +62,6 @@ def songs_list(user_input):
     number = is_number_valid(user_input)
     words = random_words(number)
     songs = random_songs(words)
-
     return songs
 
         

@@ -13,7 +13,3 @@ def configure_routes(app):
         if response is None:
             abort(404, description="Something went wrong")
         return response
-
-    @app.route('/hello')
-    def hello():
-        return 'hello'
