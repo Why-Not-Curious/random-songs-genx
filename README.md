@@ -21,9 +21,9 @@ python run_app.py
 
 ### How to make requests?
 
-Flask web server starts at port 127.0.0.1:5000 by default. In order to generate <number> of random songs enter following URL in your browser:
+Flask web server starts at port 127.0.0.1:5000 by default. In order to generate {number} of random songs enter following URL in your browser:
 
-*127.0.0.1:5000/random_songs/<number>*
+*127.0.0.1:5000/random_songs/{number}*
 
 ### How to run tests?
 
