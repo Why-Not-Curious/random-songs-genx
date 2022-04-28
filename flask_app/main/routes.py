@@ -1,4 +1,5 @@
-from flask import abort, jsonify
+from flask import abort, jsonify, render_template
+import json
 from main.api_requests import songs_list
 
 def configure_routes(app):
@@ -10,6 +11,6 @@ def configure_routes(app):
     @app.route('/random_songs/<int:number>', methods=['GET'])
     def random_songs(number):
         response = songs_list(number)
-        if response is None:
-            abort(404, description="Something went wrong")
-        return response
+        jsonify(response)
+        return render_template('random_songs.html', title="page", response = response)
+
