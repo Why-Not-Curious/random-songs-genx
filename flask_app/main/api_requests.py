@@ -59,13 +59,9 @@ def random_songs(words):
 
 # Return songs list for given number
 def songs_list(user_input):
-    try:
-        number = is_number_valid(user_input)
-        words = random_words(number)
-        result = random_songs(words)
-    except InvalidInputException:
-        result = {'error': 'Invalid request',
-            'details': 'Please enter intiger from 5 to 20.'}
+    number = is_number_valid(user_input)
+    words = random_words(number)
+    result = random_songs(words)
     return result
 
         
