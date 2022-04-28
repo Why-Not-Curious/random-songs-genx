@@ -35,26 +35,32 @@ def random_words(number):
 # Generate songs list from Music Brainz API
 def random_songs(words):
     result = []
+    titles = []
     for word in words:
         response = requests.get(song_gen_api + word)
         response_json = response.json()
         try:
             recordings = response_json.get('recordings')[0]
             title = recordings.get('title')
-            artist_credit = recordings.get('artist-credit')[0]
-            artist_name = artist_credit.get('name')
-            releases = recordings.get('releases')[0]
-            release_title = releases.get('title')
-            song = {'word': word,
-                        'title': title, 
-                        'artist': artist_name,
-                        'album': release_title}
+            if title in titles:
+                continue
+            else:
+                titles.append(title)
+                artist_credit = recordings.get('artist-credit')[0]
+                artist_name = artist_credit.get('name')
+                releases = recordings.get('releases')[0]
+                release_title = releases.get('title')
+                song = {'word': word,
+                            'title': title, 
+                            'artist': artist_name,
+                            'album': release_title}
         except:
             song = {'word': word,
                     'title': 'No recording found!', 
                     'artist': '-',
                     'album': '-'}
         result.append(song)
+        result.sort(key=lambda k: (k.get('word')))
     return result
 
 # Return songs list for given number
