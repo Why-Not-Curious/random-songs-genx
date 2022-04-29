@@ -1,5 +1,6 @@
+from typing import Counter
 from flask_app.main.api_requests import API_request, is_number_valid, InvalidInputException, ExternalRequestException, API_request, random_words, random_songs, songs_list
-import pytest
+import pytest, collections
 
 # FUNCTION: is_number_valid(user_input)
 # test if function returns intiger for valid user input (intiger between 5 and 20)
@@ -49,6 +50,15 @@ def test_random_songs_passed():
     assert 'Lion' in result[0].get('title')
     assert isinstance(result[0].get('artist'), str)
     assert isinstance(result[0].get('album'), str)
+
+# test if function removes duplicate songs
+def test_random_songs_duplicates():
+    result =  random_songs({'Lion', 'Lion'})
+    titles_list = []
+    for song in result:
+        titles_list.append(song.get('title'))
+    titles_set = set(titles_list)
+    assert len(titles_list) == len(titles_set)
 
 # test if function returns list of dictionaries with correct content for set of unexisting words
 def test_random_songs_doesntexist():
