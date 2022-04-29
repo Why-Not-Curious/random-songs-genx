@@ -1,5 +1,4 @@
-from flask import abort, jsonify, render_template
-import json
+from flask import jsonify, render_template
 from main.api_requests import songs_list, InvalidInputException, ExternalRequestException
 
 def configure_routes(app):
