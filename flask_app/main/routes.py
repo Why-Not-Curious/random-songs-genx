@@ -1,6 +1,6 @@
 from flask import abort, jsonify, render_template
 import json
-from main.api_requests import songs_list, InvalidInputException
+from main.api_requests import songs_list, InvalidInputException, ExternalRequestException
 
 def configure_routes(app):
 
@@ -22,4 +22,10 @@ def configure_routes(app):
             'details': 'Please enter intiger from 5 to 20.'}
             jsonify(response)
             return render_template('error.html', title="page", response = response)
+        except ExternalRequestException:
+            response = {'error': 'External API error',
+            'details': 'Request to external API resource failed. Try again later.'}
+            jsonify(response)
+            return render_template('error.html', title="page", response = response)
+        
 
