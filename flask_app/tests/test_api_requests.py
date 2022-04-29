@@ -1,6 +1,5 @@
-from typing import Counter
 from flask_app.main.api_requests import API_request, is_number_valid, InvalidInputException, ExternalRequestException, API_request, random_words, random_songs, songs_list
-import pytest, collections
+import pytest
 
 # FUNCTION: is_number_valid(user_input)
 # test if function returns intiger for valid user input (intiger between 5 and 20)
