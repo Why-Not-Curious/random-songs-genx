@@ -10,6 +10,9 @@ class GeneralException(Exception):
 class InvalidInputException(GeneralException):
     pass
 
+class ExternalRequestException(GeneralException):
+    pass
+
 
 # Check if requestis  number between 5 and 20
 def is_number_valid(user_input):
@@ -22,13 +25,21 @@ def is_number_valid(user_input):
     else:
         raise InvalidInputException
 
+# Single request from external API
+def API_request(url):
+    try:
+        response = requests.get(url)
+        response_json = response.json()
+    except:
+        raise ExternalRequestException
+    return response_json
+
 # Generate words list from random words API
 def random_words(number):
     result = set()
     for i in range(1, number+1):
-        response = requests.get(word_gen_api)
-        response_json = response.json()[0]
-        word = response_json.get('word')
+        response_json = API_request(word_gen_api)
+        word = response_json[0].get('word')
         result.add(word)
     return result
 
@@ -37,8 +48,8 @@ def random_songs(words):
     result = []
     titles = []
     for word in words:
-        response = requests.get(song_gen_api + word)
-        response_json = response.json()
+        url = song_gen_api + word
+        response_json = API_request(url)
         try:
             recordings = response_json.get('recordings')[0]
             title = recordings.get('title')
