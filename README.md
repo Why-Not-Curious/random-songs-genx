@@ -3,7 +3,7 @@
 Random songs generator Flask based web app. Based on number stated by user app returns corresponding number of random songs including random word in the title. How it works?
 
 * User requests number from 5 to 20 as part of URL e.g. *127.0.0.1:5000/random_songs/7*
-* Random set of unique words is generated. Data is revreived from external API.
+* Random set of unique words is generated. Data is retrieved from external API.
 * Random sorted list of unique songs is generated. Every song includes subsequent random word from set in it's title. For every word -  song pair there's information about album title and artist name. Chosen songs are always best ranked songs from resource list. Data is revreived from external API.
 * Result is returned through simple web app.
 
